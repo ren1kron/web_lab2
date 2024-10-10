@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'war' // Добавляем плагин war для создания WAR-файла
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+
+
+
+group = 'com.ren1kron'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    // Servlet API предоставляется контейнером, поэтому используем compileOnly
+//    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+//
+//    // JSP API также предоставляется контейнером
+//    compileOnly 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+//
+//    // JSTL для JSP (добавляется в WAR)
+//    implementation 'javax.servlet:jstl:1.2'
+
+    compileOnly('jakarta.platform:jakarta.jakartaee-web-api:9.0.0')
+    compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
+    compileOnly('jakarta.json:jakarta.json-api:2.1.1')
+    compileOnly('jakarta.json.bind:jakarta.json.bind-api:3.0.0')
+    compileOnly('jakarta.ejb:jakarta.ejb-api:4.0.1')
+
+    // Зависимости для тестирования
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+war {
+    archiveFileName = 'web_lab2.war' // Имя выходного WAR-файла
+    webAppDirectory = file('src/main/webapp') // Папка с веб-ресурсами
+    // Если необходимо добавить дополнительные настройки, их можно указать здесь
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
