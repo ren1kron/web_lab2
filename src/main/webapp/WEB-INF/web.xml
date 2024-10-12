@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
 
     <display-name>Web Lab 2</display-name>
 
-<!--    &lt;!&ndash; Контроллер сервлет &ndash;&gt;-->
-<!--    <servlet>-->
-<!--        <servlet-name>ControllerServlet</servlet-name>-->
-<!--        <servlet-class>com.ren1kron.controller.ControllerServlet</servlet-class>-->
-<!--    </servlet>-->
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>ControllerServlet</servlet-name>-->
-<!--        <url-pattern>/ControllerServlet</url-pattern>-->
-<!--    </servlet-mapping>-->
 
-<!--    &lt;!&ndash; Обслуживающий сервлет &ndash;&gt;-->
-<!--    <servlet>-->
-<!--        <servlet-name>AreaCheckServlet</servlet-name>-->
-<!--        <servlet-class>com.ren1kron.service.AreaCheckServlet</servlet-class>-->
-<!--    </servlet>-->
+    <!-- Контроллер сервлет -->
+    <servlet>
+        <servlet-name>ControllerServlet</servlet-name>
+        <servlet-class>com.ren1kron.controller.ControllerServlet</servlet-class>
+    </servlet>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>AreaCheckServlet</servlet-name>-->
-<!--        <url-pattern>/AreaCheckServlet</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>ControllerServlet</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+
+    <!-- Обслуживающий сервлет -->
+    <servlet>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <servlet-class>com.ren1kron.service.AreaCheckServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <url-pattern>/areaCheck</url-pattern>
+    </servlet-mapping>
 
     <!-- Настройка welcome file -->
     <welcome-file-list>

@@ -37,6 +37,10 @@ dependencies {
     compileOnly('jakarta.json.bind:jakarta.json.bind-api:3.0.0')
     compileOnly('jakarta.ejb:jakarta.ejb-api:4.0.1')
 
+    // JSTL для JSP (добавляется в WAR)
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.1'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+
     // Зависимости для тестирования
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

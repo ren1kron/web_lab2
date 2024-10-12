@@ -60,57 +60,59 @@ document.getElementById('r').addEventListener('change', (ev) => {
     state.r = parseFloat(ev.target.value);
 });
 
-document.getElementById('data-form').addEventListener('submit', async function (ev) {
-    ev.preventDefault();
 
-    if (!validateState()) {
-        alert('Sorry, you are not able to submit your variables. Some of them are invalid.')
-        return;
-    }
-
-
-    const table = document.getElementById('result');
-
-    const newRow = table.insertRow(-1);
-
-    const rowX = newRow.insertCell(0);
-    const rowY = newRow.insertCell(1);
-    const rowR = newRow.insertCell(2);
-    const rowResult = newRow.insertCell(3);
-
-    const rowCurTime = newRow.insertCell(4);
-    const rowExecutionTime = newRow.insertCell(5);
-
-    rowX.innerText = state.x;
-    rowY.innerText = state.y;
-    rowR.innerText = state.r;
-
-    const params = new URLSearchParams(state);
-
-    const response = await fetch('/calculate/app.jar?' + params.toString());
-    // const response = await fetch('/fcgi-bin/web_lab1.jar?' + params.toString());
-
-    if (response.ok) {
-        const result = await response.json();
-
-        rowResult.textContent = result.result.toString();
-        if (result.result) {
-            rowResult.textContent = 'Попал';
-        } else {
-            rowResult.textContent = 'Промазал'
-        }
-
-        rowCurTime.textContent = result.currentTime.toString();
-        rowExecutionTime.textContent = (result.executionTimeMs / 1_000_000_000).toString();
-    } else if (response.status === 400) {
-        const result = await response.json();
-        rowResult.textContent = `error: ${result.reason}`;
-        console.error(response.status + " " + response.statusText);
-    } else {
-        rowResult.textContent = `error: ${response.statusText}`;
-        console.error(response.status + " " + response.statusText);
-    }
-});
+// document.getElementById('data-form').addEventListener('submit', async function (ev) {
+//     ev.preventDefault();
+//
+//     if (!validateState()) {
+//         alert('Sorry, you are not able to submit your variables. Some of them are invalid.')
+//         return;
+//     }
+//
+//
+//     const table = document.getElementById('result');
+//
+//     const newRow = table.insertRow(-1);
+//
+//     const rowX = newRow.insertCell(0);
+//     const rowY = newRow.insertCell(1);
+//     const rowR = newRow.insertCell(2);
+//     const rowResult = newRow.insertCell(3);
+//
+//     const rowCurTime = newRow.insertCell(4);
+//     const rowExecutionTime = newRow.insertCell(5);
+//
+//     rowX.innerText = state.x;
+//     rowY.innerText = state.y;
+//     rowR.innerText = state.r;
+//
+//     const params = new URLSearchParams(state);
+//
+//     const response = await fetch('/controller/app.jar?' + params.toString());
+//     // const response = await fetch('/calculate/app.jar?' + params.toString());
+//     // const response = await fetch('/fcgi-bin/web_lab1.jar?' + params.toString());
+//
+//     if (response.ok) {
+//         const result = await response.json();
+//
+//         rowResult.textContent = result.result.toString();
+//         if (result.result) {
+//             rowResult.textContent = 'Попал';
+//         } else {
+//             rowResult.textContent = 'Промазал'
+//         }
+//
+//         rowCurTime.textContent = result.currentTime.toString();
+//         rowExecutionTime.textContent = (result.executionTimeMs / 1_000_000_000).toString();
+//     } else if (response.status === 400) {
+//         const result = await response.json();
+//         rowResult.textContent = `error: ${result.reason}`;
+//         console.error(response.status + " " + response.statusText);
+//     } else {
+//         rowResult.textContent = `error: ${response.statusText}`;
+//         console.error(response.status + " " + response.statusText);
+//     }
+// });
 
 
 /**/

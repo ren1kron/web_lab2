@@ -1,3 +1,5 @@
+<%--<%@ taglib prefix="c" uri="http://jakarta.ee/jstl/core" %>--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ru">
@@ -9,17 +11,24 @@
 </head>
 <body>
 <header id="header-container">
-    <h1 class="header-title">Лабораторная работа <span class="pink-header">№ 1</span></h1>
+    <h1 class="header-title">Лабораторная работа <span class="pink-header">№ 2</span></h1>
     <h1>Дисциплина: <span  class="pink-header">Веб-программирование</span></h1>
-    <h2 class="author-info">ФИО: <span  class="pink-header">Пронкин Алексей Дмитриевич</span>, Группа: <span  class="pink-header">P3208</span>, Вариант: <span  class="pink-header">199</span></h2>
+    <h2 class="author-info">ФИО: <span  class="pink-header">Пронкин Алексей Дмитриевич</span>, Группа: <span  class="pink-header">P3208</span>, Вариант: <span  class="pink-header">312313</span></h2>
 </header>
+
+<!-- Вывод Сообщения об Ошибке -->
+<c:if test="${not empty error}">
+    <div class="error-message">
+            ${error}
+    </div>
+</c:if>
 
 <!-- Input Form and Graph -->
 <table id="main-content" >
     <tr>
         <!-- Input form -->
         <td>
-            <form method="get" action="/" id="data-form">
+            <form method="post" action="${pageContext.request.contextPath}/controller" id="data-form">
                 <label for="x">Enter X:</label>
                 <input type="text" placeholder="enter a number from -3 to 3" id="x" name="x" required>
 

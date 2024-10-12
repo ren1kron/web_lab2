@@ -12,12 +12,6 @@ import java.io.IOException;
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
     private static final String ERROR_HEAD = "Invalid data provided: %s";
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -27,7 +21,7 @@ public class ControllerServlet extends HttpServlet {
         // here we will validate params
         try {
             // get params
-            var x = request.getParameter("xDigit");
+            var x = request.getParameter("x");
             var y = request.getParameter("y");
             var r = request.getParameter("r");
 
