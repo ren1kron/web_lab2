@@ -145,6 +145,9 @@ footer a:hover {
     max-width: 1200px; /* Ограничиваем ширину контента */
     margin: 0 auto; /* Центрируем контент */
 }
+.miss {
+    color: red;
+}
 
 
 

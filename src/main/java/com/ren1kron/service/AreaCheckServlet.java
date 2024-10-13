@@ -50,7 +50,8 @@ public class AreaCheckServlet extends HttpServlet {
         request.setAttribute("results", result);
 
         // redirect on index.jsp
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+//        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/result.jsp").forward(request, response);
 
     }
     private boolean hitCheck(float x, float y, float r) {

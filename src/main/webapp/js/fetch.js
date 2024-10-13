@@ -1,194 +1,189 @@
 'use strict';
 
-const state = {
+const params = {
     x: 0,
     y: 0,
-    r: 1.0,
+    r: 0
 };
 
 
-function validateState() {
-    if (isNaN(state.x) || state.x < -3 || state.x > 3) {
-        return false;
-    }
+/**
+ * Center of x axis on svg graph. Equals half of svg.width
+ * @type {number}
+ */
+const centerX = document.getElementById("svg").getAttribute('width') / 2; // Центр по оси X
+/**
+ * Center of y axis on svg graph. Equals half of svg.height
+ * @type {number}
+ */
+const centerY = document.getElementById("svg").getAttribute('height') / 2; // Центр по оси Y
+/**
+ * This const sets a scale for svg elements
+ * @type {number}
+ */
+const scale = 40;
 
-    if (isNaN(state.y) || state.y < -5 || state.y > 3) {
-        return false;
-    }
-
-    if (isNaN(state.r) || state.r <= 0 || state.r > 3) {
-        return false;
-    }
-    return true;
+/**
+ * Handles checking any of 'x' checkboxes
+ * @param self
+ */
+function checkX(self) {
+    document
+        .querySelectorAll('input[type="checkbox"][name="x"]')
+        .forEach((checkbox) => (checkbox.checked = false));
+    self.checked = true;
+    params.x = self.value;
+    updatePointer();
 }
 
-
-/* this part throws error if x is invalid */
-function validateX() {
-    const error = document.getElementById('errorX');
-    if (isNaN(state.x) || state.x < -3 || state.x > 3) {
-        error.hidden = false;
-        error.innerText = 'X must be in [-3;3]';
-        throw new Error('Invalid state');
-    }
-    error.hidden = true;
-}
-
-/* this part throws error if y is invalid */
-function validateY() {
+/**
+ * Handles changes in 'y' text form, validates input
+ * @param ev – change in 'y' text form
+ */
+function checkY(ev) {
+    const input = ev.target.value; /* string value of y form input */
     const error = document.getElementById('errorY');
-    if (isNaN(state.y) || state.y < -5 || state.y > 3) {
+
+    /* validate y */
+    if (isNaN(input) || parseFloat(input) < -5 || parseFloat(input) > 5) {
+        error.innerText = 'Y must be in [-5;5]';
         error.hidden = false;
-        error.innerText = 'Y must be in [-5;3]';
-        throw new Error('Invalid state');
+        throw new Error('Invalid param Y');
     }
+    params.y = parseFloat(input);
     error.hidden = true;
+    updatePointer();
 }
+document.getElementById('y').addEventListener('change', (ev) => checkY(ev));
 
-
-document.getElementById('x').addEventListener('change', validateX);
-
-document.getElementById('x').addEventListener('change', (ev) => {
-    state.x = parseFloat(ev.target.value);
-});
-
-document.getElementById('y').addEventListener('change', (ev) => {
-    state.y = parseFloat(ev.target.value);
-});
-
-document.getElementById('r').addEventListener('change', (ev) => {
-    state.r = parseFloat(ev.target.value);
-});
-
-
-// document.getElementById('data-form').addEventListener('submit', async function (ev) {
-//     ev.preventDefault();
-//
-//     if (!validateState()) {
-//         alert('Sorry, you are not able to submit your variables. Some of them are invalid.')
-//         return;
-//     }
-//
-//
-//     const table = document.getElementById('result');
-//
-//     const newRow = table.insertRow(-1);
-//
-//     const rowX = newRow.insertCell(0);
-//     const rowY = newRow.insertCell(1);
-//     const rowR = newRow.insertCell(2);
-//     const rowResult = newRow.insertCell(3);
-//
-//     const rowCurTime = newRow.insertCell(4);
-//     const rowExecutionTime = newRow.insertCell(5);
-//
-//     rowX.innerText = state.x;
-//     rowY.innerText = state.y;
-//     rowR.innerText = state.r;
-//
-//     const params = new URLSearchParams(state);
-//
-//     const response = await fetch('/controller/app.jar?' + params.toString());
-//     // const response = await fetch('/calculate/app.jar?' + params.toString());
-//     // const response = await fetch('/fcgi-bin/web_lab1.jar?' + params.toString());
-//
-//     if (response.ok) {
-//         const result = await response.json();
-//
-//         rowResult.textContent = result.result.toString();
-//         if (result.result) {
-//             rowResult.textContent = 'Попал';
-//         } else {
-//             rowResult.textContent = 'Промазал'
-//         }
-//
-//         rowCurTime.textContent = result.currentTime.toString();
-//         rowExecutionTime.textContent = (result.executionTimeMs / 1_000_000_000).toString();
-//     } else if (response.status === 400) {
-//         const result = await response.json();
-//         rowResult.textContent = `error: ${result.reason}`;
-//         console.error(response.status + " " + response.statusText);
-//     } else {
-//         rowResult.textContent = `error: ${response.statusText}`;
-//         console.error(response.status + " " + response.statusText);
-//     }
-// });
-
-
-/**/
-/* ЗДЕСЬ НАЧИНАЕТСЯ ЧАСТЬ С ГРАФИКОМ*/
-/**/
-function updateShapes() {
-    /* get radius */
-    const radius = state.r * 40;
-
-
-    /* redraw triangle */
-    const trianglePoints = `150,150 ${150 + radius/2},150 150,${150 - radius/2}`;
-    document.getElementById('triangle').setAttribute('points', trianglePoints);
-
-    /* redraw square */
-    document.getElementById('square').setAttribute('width', radius);
-    document.getElementById('square').setAttribute('height', radius);
-
-    /* redraw quarter circle */
-    const quarterCirclePath = `M 150 150 L ${150 - radius} 150 A ${radius} ${radius} 0 0 1 150 ${150 - radius} Z`;
-    document.getElementById('quarterCircle').setAttribute('d', quarterCirclePath);
-
-}
-
-
-window.onload = function() { /* this func matches figure to selected Radius after refreshing page */
-    // Получаем текущее значение r из поля ввода
-    state.r = parseFloat(document.getElementById('r').value);
-
-    // Добавляем слушатель на изменение радиуса
-    document.getElementById('r').addEventListener('change', (ev) => {
-        state.r = parseFloat(ev.target.value);
-        updateShapes();
-    });
-    // Добавим такие же слушатели на X и Y
-    document.getElementById('x').addEventListener('change', (ev) => {
-        state.x = parseFloat(ev.target.value);
-        // updateShapes();
-        validateX();
-        drawPoint();
-    });
-    document.getElementById('y').addEventListener('change', (ev) => {
-        state.y = parseFloat(ev.target.value);
-        // updateShapes();
-        validateY();
-        drawPoint();
-    });
-
-    // Обновляем фигуры на графике при загрузке страницы
+/**
+ * Handles checking any of 'r' checkboxes
+ * @param self
+ */
+function checkR(self) {
+    document
+        .querySelectorAll('input[type="checkbox"][name="r"]')
+        .forEach((checkbox) => (checkbox.checked = false));
+    self.checked = true;
+    params.r = parseFloat(self.value);
     updateShapes();
-    drawPoint();
-};
+}
 
 
-// функции для отрисовки точки
-function drawPoint() {
-    // Вычисляем положение точки относительно центра графика
-    const svgCenterX = 150; // Центр по оси X
-    const svgCenterY = 150; // Центр по оси Y
-
-    // Масштабируем координаты с учётом радиуса r
-    // const scaleFactor = 40 / rValue; // Масштаб, чтобы учесть радиус
-    const scaledX = svgCenterX + state.x * 40;
-    const scaledY = svgCenterY - state.y * 40; // Отрицательное, чтобы двигать вверх
-
-    // Получаем элемент circle для отрисовки точки или создаём, если его нет
-    let pointElement = document.getElementById('point');
-    if (!pointElement) {
-        pointElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        pointElement.setAttribute('id', 'point');
-        pointElement.setAttribute('r', 3); // Радиус самой точки
-        pointElement.setAttribute('fill', 'red'); // Цвет точки
-        document.getElementById('svg').appendChild(pointElement);
+/**
+ *
+ */
+function svgClick(event) {
+    /* check if radius set */
+    if (params.r <= 0) {
+        alert('Please, set a radius first');
+        return;
     }
+
+    const svg = document.getElementById('svg');
+    const rect = svg.getBoundingClientRect();
+    const xClick = event.clientX - rect.left;
+    const yClick = event.clientY - rect.top;
+
+    params.x = (xClick - centerX) / scale;
+    params.y = (centerY - yClick) / scale;
+    updatePointer();
+
+    console.log('param x:' + params.x);
+    console.log('param y:' + params.y);
+    console.log('param r:' + params.r);
+    sendPoint(params.x, params.y);
+}
+document.getElementById('svg').addEventListener('click', svgClick);
+
+function sendPoint(x, y) {
+    const form = document.getElementById('data-form');
+
+    const customX = document.getElementById('custom-x');
+    customX.value = x.toString();
+    customX.disabled = false;
+    checkX(customX);
+
+    console.log(y);
+    console.log(params.r);
+
+    form["y"].value = y;
+    form["r"].value = params.r;
+
+    console.log('form value x: ' + form["x"].value);
+    console.log('form value y: ' + form["y"].value);
+    console.log('form value r: ' + form["r"].value);
+    // console.log(y);
+    // console.log(params.r);
+    form.submit();
+}
+
+// /**
+//  * Draw result point
+//  * Green if hit, black if miss
+//  * @param x
+//  * @param y
+//  * @param hit
+//  */
+// function drawPoint(x, y, hit) {
+//     const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+//     point.setAttribute('r', 2);
+//     point.setAttribute('fill', hit ? 'green' : 'black');
+//     point.setAttribute('fill-opacity', 0.8);
+//     point.setAttribute('cx', x);
+//     point.setAttribute('cy', y);
+//     document.getElementById('svg').appendChild(point);
+// }
+
+/**
+ * Updates pointer on graph when user enters cords using input form
+ */
+function updatePointer() {
+    // Вычисляем положение точки относительно центра графика
+    // Масштабируем координаты
+    const scaledX = centerX + params.x * scale;
+    const scaledY = centerY - params.y * scale; // Отрицательное, чтобы двигать вверх
+
+    // Получаем элемент circle для отрисовки точки
+    let pointElement = document.getElementById('pointer');
 
     // Устанавливаем новые координаты для точки
     pointElement.setAttribute('cx', scaledX);
     pointElement.setAttribute('cy', scaledY);
 }
+function updateShapes() {
+    /* get radius */
+    const radius = params.r * scale;
+
+    /* update triangle */
+    const trianglePoints = `
+    ${centerX},${centerY}
+    ${centerX},${centerY + radius}
+    ${centerX - radius/2},${centerY}
+  `;
+    document.getElementById('triangle').setAttribute('points', trianglePoints.trim());
+
+    /* update rectangle */
+    const rectangle = document.getElementById('rectangle');
+    rectangle.setAttribute('x', centerX);
+    rectangle.setAttribute('y', centerY - radius);
+    rectangle.setAttribute('width', radius/2);
+    rectangle.setAttribute('height', radius);
+
+    /* update quarter circle */
+    const quarterCirclePath = `
+    M ${centerX} ${centerY}
+    L ${centerX - radius/2} ${centerY}
+    A ${radius/2} ${radius/2} 0 0 1 ${centerX} ${centerY - radius/2}
+    Z `;
+    /*
+     M – move to (set starting point)
+     L – line to
+     A – arc to (rx ry x-axis-rotation large-arc-flag(0 for small and 1 for large) sweep-flag x y)
+    */
+    document.getElementById('quarterCircle').setAttribute('d', quarterCirclePath.trim());
+}
+// window.onload = function() {
+//     updateShapes();
+// };
+
