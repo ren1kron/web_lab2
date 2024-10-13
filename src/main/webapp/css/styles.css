@@ -146,6 +146,9 @@ footer a:hover {
     margin: 0 auto; /* Центрируем контент */
 }
 .miss {
+    color: red;
+}
+.hit {
     color: #11ff00;
 }
 

@@ -22,6 +22,9 @@
     </div>
 </c:if>
 
+<%--TODO add validation on click submit in js
+    TODO make clicking on any area of svg possible--%>
+
 <!-- Input Form and Graph -->
 <table id="main-content" >
     <tr>
@@ -176,7 +179,8 @@
                             cx="${250 + result.x * 40}"
                             cy="${250 - result.y * 40}"
                             fill="${result.hit ? "#11FF00FF" : "red"}"
-                                    fill-opacity="0.9"  stroke="${result.hit ? "green" : "firebrick"}">
+                                    fill-opacity="0.9"
+                            stroke="${result.hit ? "green" : "firebrick"}">
                     </circle>
                 </c:forEach>
             </svg>
@@ -223,7 +227,7 @@
 
             <c:choose>
                 <c:when test="${result.hit}">
-                    <td>
+                    <td class="hit">
                         Попал
                     </td>
                     </c:when>
