@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Лабораторная работа № 2 по дисциплине "Веб-программирование". СППО ИТМО</title>
-<%--    <link rel="stylesheet" href="css/styles.css">--%>
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/result-styles.css">
 </head>
 <body>
@@ -16,12 +16,12 @@
         <c:if test="${not empty currentResult}">
             <c:choose>
             <c:when test="${currentResult.hit == true}">
-                <div>
+                <div class="hit">
                     <h3>Попадание</h3>
                 </div>
             </c:when>
             <c:otherwise>
-                <div>
+                <div class="miss">
                     <h3>Промах</h3>
                 </div>
             </c:otherwise>

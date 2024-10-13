@@ -21,13 +21,9 @@ function animate() {
     // Проверяем столкновения с границами
     if (posX + imgWidth >= window.innerWidth || posX <= 0) {
         speedX = -speedX;
-        // Дополнительные эффекты
-        // changeImageProperties();
     }
     if (posY + imgHeight >= window.innerHeight || posY <= 0) {
         speedY = -speedY;
-        // Дополнительные эффекты
-        // changeImageProperties();
     }
 
     // Обновляем угол для вращения
@@ -42,14 +38,8 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-// Функция для изменения свойств изображения
-function changeImageProperties() {
-    // Пример: изменяем непрозрачность
-    img.style.opacity = Math.random() * 0.5 + 0.5;
-}
-
-// Запускаем анимацию после загрузки изображения
-img.onload = function() {
+// Функция инициализации
+function init() {
     // Получаем размеры изображения
     imgWidth = img.offsetWidth;
     imgHeight = img.offsetHeight;
@@ -68,7 +58,16 @@ img.onload = function() {
 
     // Запускаем анимацию
     animate();
-};
+}
+
+// Проверяем, загружено ли изображение
+if (img.complete) {
+    // Если изображение уже загружено, инициализируем анимацию сразу
+    init();
+} else {
+    // Иначе ждем события загрузки изображения
+    img.onload = init;
+}
 
 // Обновляем размеры изображения при изменении размера окна
 window.addEventListener('resize', () => {
