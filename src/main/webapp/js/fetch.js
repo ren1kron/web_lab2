@@ -113,27 +113,15 @@ function sendPoint(x, y) {
     console.log('form value x: ' + form["x"].value);
     console.log('form value y: ' + form["y"].value);
     console.log('form value r: ' + form["r"].value);
-    // console.log(y);
-    // console.log(params.r);
     form.submit();
 }
 
-// /**
-//  * Draw result point
-//  * Green if hit, black if miss
-//  * @param x
-//  * @param y
-//  * @param hit
-//  */
-// function drawPoint(x, y, hit) {
-//     const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-//     point.setAttribute('r', 2);
-//     point.setAttribute('fill', hit ? 'green' : 'black');
-//     point.setAttribute('fill-opacity', 0.8);
-//     point.setAttribute('cx', x);
-//     point.setAttribute('cy', y);
-//     document.getElementById('svg').appendChild(point);
-// }
+// document.getElementById('data-form')
+//     .addEventListener('submit', function(ev) {
+//
+//     });
+
+
 
 /**
  * Updates pointer on graph when user enters cords using input form
@@ -183,6 +171,34 @@ function updateShapes() {
     */
     document.getElementById('quarterCircle').setAttribute('d', quarterCirclePath.trim());
 }
+
+/**
+ * Validates params (for sending by clicking button)
+ * @returns {boolean}
+ */
+function validateState() {
+
+    if (isNaN(params.x) || params.x < -2 || params.x > 2) {
+        return false;
+    }
+
+    if (isNaN(params.y) || params.y < -5 || params.y > 5) {
+        return false;
+    }
+
+    if (isNaN(params.r) || params.r <= 0 || params.r > 3) {
+        return false;
+    }
+    return true;
+}
+document.getElementById('data-form').addEventListener('submit', function (ev) {
+    if (!validateState()) {
+        ev.preventDefault();
+        alert('Sorry, you are not able to submit your variables. Some of them are invalid.');
+    }
+});
+
+
 // window.onload = function() {
 //     updateShapes();
 // };

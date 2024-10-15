@@ -122,7 +122,7 @@ footer {
     background-color: rgba(19, 33, 40, 0.89);
     color: #ffffff; /* Цвет текста */
     padding: 1px; /* Внутренние отступы */
-    text-align: left; /* Центрирование текста */
+    text-align: center; /* Центрирование текста */
     position: relative;
     bottom: 0;
     width: 100%; /* Растягиваем footer на всю ширину */

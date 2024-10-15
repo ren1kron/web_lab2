@@ -62,6 +62,9 @@ button:disabled {
 /* END BUTTON STYLING */
 
 /* START STYLING TEXT */
+table {
+    table-layout: fixed;
+}
 h3 {
     font-size: 20px; /* Размер шрифта */
     font-family: 'Arial Black', sans-serif; /* Шрифт */

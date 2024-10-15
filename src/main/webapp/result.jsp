@@ -34,7 +34,7 @@
                         <th>Y</th>
                         <th>R</th>
         <%--                <th>Попадание</th>--%>
-                        <th>Время запроса</th>
+<%--                        <th>Время запроса</th>--%>
                     </tr>
                     </thead>
                     <tbody id="result">
@@ -52,7 +52,7 @@
         <%--                            </c:otherwise>--%>
         <%--                        </c:choose>--%>
         <%--                    </td>--%>
-                            <td>${currentResult.reqNanoTime}</td>
+<%--                            <td>${currentResult.reqNanoTime}</td>--%>
                         </tr>
                     </tbody>
                 </table>
@@ -69,6 +69,6 @@
             <button type="button" onclick="window.location.href='index.jsp'">Back to form</button>
         </div>
     </div>
-<script type="text/javascript" src="js/bounsing-img.js"></script>
+<script type="text/javascript" src="js/bouncing-img.js"></script>
 </body>
 </html>

@@ -22,18 +22,12 @@
     </div>
 </c:if>
 
-<%--TODO add validation on click submit in js
-    TODO make clicking on any area of svg possible--%>
-
 <!-- Input Form and Graph -->
 <table id="main-content" >
     <tr>
         <!-- Input form -->
         <td>
             <form method="post" action="${pageContext.request.contextPath}/controller" id="data-form">
-<%--                <label for="x">Enter X:</label>--%>
-<%--                <input type="text" placeholder="enter a number from -3 to 3" id="x" name="x" required>--%>
-
                 <label for="xs">Select X:</label>
                 <fieldset id="xs">
                     <label><input type="checkbox" name="x" onclick="checkX(this)" value="-2">-2</label>
@@ -59,14 +53,6 @@
                 <p></p>
 
                 <label for="rs">Select R:</label>
-<%--                <select id="r" name="r" required>--%>
-<%--                    <option value="1">1</option>--%>
-<%--                    <option value="1.5">1.5</option>--%>
-<%--                    <option value="2">2</option>--%>
-<%--                    <option value="2.5">2.5</option>--%>
-<%--                    <option value="3">3</option>--%>
-<%--                </select>--%>
-
                 <fieldset id="rs">
                     <label><input type="checkbox" name="r" onclick="checkR(this)" value="1">1</label>
                     <label><input type="checkbox" name="r" onclick="checkR(this)" value="1.5">1.5</label>
