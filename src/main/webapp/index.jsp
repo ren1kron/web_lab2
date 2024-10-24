@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Лабораторная работа № 2 по дисциплине "Веб-программирование". СППО ИТМО</title>
     <link rel="stylesheet" href="css/styles.css">
+
+    <script type="text/javascript">
+        const contextPath = '${pageContext.request.contextPath}';
+    </script>
 </head>
 <body>
 <header id="header-container">
@@ -206,7 +210,7 @@
     </thead>
     <tbody id="result">
     <c:forEach var="result" items="${sessionScope.results}">
-        <tr>
+        <tr data-x="${result.x}" data-y="${result.y}" data-r="${result.x}">
             <td>${result.x}</td>
             <td>${result.y}</td>
             <td>${result.r}</td>

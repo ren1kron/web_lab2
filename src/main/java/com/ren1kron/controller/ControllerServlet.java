@@ -12,6 +12,12 @@ import java.io.IOException;
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
     private static final String ERROR_HEAD = "Invalid data provided: %s";
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/areaCheck").forward(request, response);
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -42,9 +48,9 @@ public class ControllerServlet extends HttpServlet {
 
             // every value should be a number
 
-                var xDigit = Float.parseFloat(x);
-                var yDigit = Float.parseFloat(y);
-                var rDigit = Float.parseFloat(r);
+                Float.parseFloat(x);
+                Float.parseFloat(y);
+                Float.parseFloat(r);
 
 
             // if everything is ok – redirect to AreaCheck

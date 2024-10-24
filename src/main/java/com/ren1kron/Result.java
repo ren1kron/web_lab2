@@ -20,6 +20,13 @@ public class Result {
         this.reqNanoTime = reqNanoTime;
     }
 
+    public Result(float x, float y, float r, boolean hit) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.hit = hit;
+    }
+
     public float getX() {
         return x;
     }

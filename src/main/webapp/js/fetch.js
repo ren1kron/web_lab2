@@ -198,8 +198,13 @@ document.getElementById('data-form').addEventListener('submit', function (ev) {
     }
 });
 
+document.querySelectorAll('#result-table tbody tr').forEach(function(row) {
+    row.addEventListener('click', function() {
+        const x = this.dataset.x;
+        const y = this.dataset.y;
+        const r = this.dataset.r;
 
-// window.onload = function() {
-//     updateShapes();
-// };
+        window.location.href = `${contextPath}/controller?x=${encodeURIComponent(x)}&y=${encodeURIComponent(y)}&r=${encodeURIComponent(r)}`;
+    });
+});
 

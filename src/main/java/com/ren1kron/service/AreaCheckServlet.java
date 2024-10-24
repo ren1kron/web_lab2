@@ -16,6 +16,24 @@ import java.util.ArrayList;
 @WebServlet("/areaCheck")
 public class AreaCheckServlet extends HttpServlet {
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // get params
+        float x = Float.parseFloat(request.getParameter("x"));
+        float y = Float.parseFloat(request.getParameter("y"));
+        float r = Float.parseFloat(request.getParameter("r"));
+        // hit check
+        boolean hit = hitCheck(x, y, r);
+
+        Result result = new Result(x, y, r, hit);
+
+        // set attributes for jsp
+        request.setAttribute("currentResult", result);
+
+        request.getRequestDispatcher("/result.jsp").forward(request, response);
+
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
     }
